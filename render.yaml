@@ -1,0 +1,36 @@
+databases:
+  - name: crypto-predictions-db
+    databaseName: crypto_predictions
+    user: postgres
+
+services:
+  - type: web
+    name: crypto-prediction-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: crypto-predictions-db
+          property: connectionString
+      - key: DEFAULT_BALANCE
+        value: "100.0"
+      - key: TAAPI_API_KEY
+        sync: false
+
+### 2️⃣ **Déployez sur Render**
+
+# 1. Push votre code sur **GitHub**
+# 2. Allez sur **render.com** → "New" → "Blueprint"
+# 3. Connectez votre repo
+# 4. Render détecte `render.yaml` et crée automatiquement :
+#    - ✅ Base PostgreSQL
+#    - ✅ Service Web
+#    - ✅ Variables d'environnement
+
+# ### 3️⃣ **Testez l'API**
+
+# Une fois déployé, vous aurez une URL type :
+# ```
+# https://crypto-prediction-api.onrender.com
