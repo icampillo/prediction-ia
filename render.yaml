@@ -1,7 +1,6 @@
 databases:
   - name: crypto-predictions-db
     databaseName: crypto_predictions
-    user: postgres
 
 services:
   - type: web
